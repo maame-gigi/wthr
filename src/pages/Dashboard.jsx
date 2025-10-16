@@ -5,17 +5,7 @@ import WeatherCard from "../components/WeatherCard";
 
 const API_KEY = "3c71b95423f5e0529c98d41eeca3336c";
 
-// Map OpenWeather 'main' codes to simple background theme classes for the card only
-const weatherBgClass = (main) => {
-  if (!main) return "from-gray-800 to-gray-700"; // default
-  const m = main.toLowerCase();
-  if (m.includes("cloud")) return "from-gray-700 to-gray-600";
-  if (m.includes("rain") || m.includes("drizzle") || m.includes("thunder")) return "from-slate-700 to-blue-800";
-  if (m.includes("snow")) return "from-blue-300 to-blue-100";
-  if (m.includes("clear")) return "from-yellow-400 to-orange-300";
-  if (m.includes("mist") || m.includes("haze") || m.includes("fog")) return "from-gray-600 to-gray-500";
-  return "from-gray-800 to-gray-700";
-};
+
 
 // Human-friendly interpretations
 const describeWeather = (main, description, temp) => {
@@ -79,11 +69,11 @@ export default function Dashboard() {
   // convert metric temps to fahrenheit if needed
   const displayTemp = (c) => (unit === "C" ? Math.round(c) : Math.round(c * 9 / 5 + 32));
 
-  const bgClass = weather ? weatherBgClass(weather.weather?.[0]?.main) : "from-gray-800 to-gray-700";
+  const bgClass = weather ? weatherBgClass(weather.weather?.[0]?.main) : "from-gray-600 to-gray-500";
 
   return (
-    <div className="p-6 w-full">
-      <div className="flex flex-col items-center space-y-8">
+    <div className={`p-6 w-full min-h-screen bg-gradient-to-br ${bgClass} transition-all duration-700`}>
+    <div className="flex flex-col items-center space-y-8">
         {/* Search */}
         <form onSubmit={handleSearch} className="w-full max-w-2xl">
           <div className="flex items-center bg-black rounded-full px-4 py-2 shadow-md">
@@ -203,4 +193,3 @@ export default function Dashboard() {
 }
 
  
-
