@@ -1,20 +1,54 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Menu } from "lucide-react";
 
 function Sidebar() {
-  const location = useLocation();
-  const linkStyle = (path) =>
-    `block px-4 py-3 rounded-lg hover:bg-gray-800 transition ${
-      location.pathname === path ? "bg-gray-800" : ""
-    }`;
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <aside className="w-48 bg-gray-950 p-4 flex flex-col space-y-2">
-      <h2 className="text-xl font-bold mb-4">🌤 Wthr</h2>
-      <Link to="/" className={linkStyle("/")}>Dashboard</Link>
-      <Link to="/forecast" className={linkStyle("/forecast")}>Forecast</Link>
-      <Link to="/recommendations" className={linkStyle("/recommendations")}>Recommendations</Link>
-    </aside>
+    <div
+      className={`bg-gray-950 text-white h-screen p-4 transition-all duration-300 ${
+        isOpen ? "w-64" : "w-20"
+      } flex flex-col`}
+    >
+      {/* Header + Toggle */}
+      <div className="flex items-center justify-between mb-6">
+        {isOpen && <h1 className="text-2xl font-bold mb-10 ml-6">WTHR</h1>}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="p-2 rounded hover:bg-gray-800"
+        >
+          <Menu size={22} />
+        </button>
+      </div>
+
+      {/* Nav Links */}
+      <nav className="space-y-3 text-sm">
+        <Link
+          to="/"
+          className="block py-2 px-3 rounded hover:bg-gray-800 transition"
+        >
+          {isOpen ? "Weather Now" : "☀️"}
+        </Link>
+        <Link
+          to="/forecast"
+          className="block py-2 px-3 rounded hover:bg-gray-800 transition"
+        >
+          {isOpen ? "Activity Generator" : "🎲"}
+        </Link>
+        <Link
+          to="/lifestyle"
+          className="block py-2 px-3 rounded hover:bg-gray-800 transition"
+        >
+          {isOpen ? "Outfit Shuffle" : "👕"} 
+        </Link>
+      </nav>
+
+      {/* Footer */}
+      <div className="mt-auto text-center text-xs text-gray-500">
+        {isOpen && <p>COPYRIGHT 2025</p>}
+      </div>
+    </div>
   );
 }
 
