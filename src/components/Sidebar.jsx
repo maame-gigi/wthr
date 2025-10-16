@@ -7,7 +7,7 @@ function Sidebar() {
 
   return (
     <div
-      className={`bg-gray-950 text-white h-screen p-4 transition-all duration-300 ${
+      className={`bg-gray-750 text-white h-screen p-4 transition-all duration-300 ${
         isOpen ? "w-64" : "w-20"
       } flex flex-col`}
     >
@@ -16,7 +16,7 @@ function Sidebar() {
         {isOpen && <h1 className="text-2xl font-bold mb-10 ml-6">WTHR</h1>}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded hover:bg-gray-800"
+          className="p-2 rounded hover:bg-gray-600"
         >
           <Menu size={22} />
         </button>
@@ -28,19 +28,19 @@ function Sidebar() {
           to="/"
           className="block py-2 px-3 rounded hover:bg-gray-800 transition"
         >
-          {isOpen ? "Weather Now" : "☀️"}
+          {isOpen ? "Weather Now" : "☀️⛅🌨️🌩️🌦️"}
         </Link>
         <Link
           to="/forecast"
-          className="block py-2 px-3 rounded hover:bg-gray-800 transition"
+          className="block py-6 px-9 rounded hover:bg-gray-800 transition"
         >
-          {isOpen ? "Activity Generator" : "🎲"}
+          {isOpen ? "Activity Generator" : "🤸‍♀️⛷️🧗‍♀️🏊🎲"}
         </Link>
         <Link
           to="/lifestyle"
-          className="block py-2 px-3 rounded hover:bg-gray-800 transition"
+          className="block py-6 px-9 rounded hover:bg-gray-800 transition"
         >
-          {isOpen ? "Outfit Shuffle" : "👕"} 
+          {isOpen ? "Outfit Shuffle" : "👕👖🥼🧤🧦"} 
         </Link>
       </nav>
 

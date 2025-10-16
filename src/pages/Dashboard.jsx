@@ -119,11 +119,13 @@ export default function Dashboard() {
             {weather && (
               <>
                 <div className="flex items-baseline gap-4">
+                <div className="flex items-baseline gap-4">
                   <h2 className="text-6xl font-bold">{displayTemp(weather.main.temp)}°</h2>
                   <div>
                     <p className="capitalize text-lg">{weather.weather[0].description}</p>
                     <p className="text-sm text-gray-100 mt-1">{weather.name}, {weather.sys?.country}</p>
                     <p className="text-xs text-gray-200 mt-1">Feels like {displayTemp(weather.main.feels_like)}°</p>
+                  </div>
                   </div>
                 </div>
 
@@ -151,23 +153,22 @@ export default function Dashboard() {
           </div>
 
           <div className="w-40 h-40 flex items-center justify-center">
-            {/* If weather present show icon, else show placeholder image */}
-           
-           {weather ? (
-            <img
-            src="https://cdn-icons-png.flaticon.com/512/1116/1116453.png"
-            alt="weather icon"
-            className="w-36 h-36 opacity-80"
-            />
-          ) : (
-          <img
-          src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png"
-          alt="default weather"
-        className="w-36 h-36 opacity-70"
-              />
-            )}
+        
+        {weather ? (
+        <img
+      src="https://cdn-icons-png.flaticon.com/512/1116/1116453.png"
+      alt="weather icon"
+      className="w-36 h-36 opacity-80 animate-float"
+       />
+      ) : (
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png"
+      alt="default weather"
+      className="w-36 h-36 opacity-70 animate-float"
+      />
+      )}
+       </div>
 
-          </div>
         </div>
 
         {/* The two cards below: clickable to navigate */}
