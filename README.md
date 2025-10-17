@@ -83,7 +83,7 @@ Stylish animated layout responsive to weather type.
 Displays personalized mood messages based on current weather.
 Updates dynamically when a city is searched on the dashboard.
 
-🫶 Credits
+# Credits
 Made with ☕, curiosity, and too many late nights.
 Created by GLORIA — a chill CS student who just wanted to know if it’ll rain. 
 CHEERS TO ALX's Mr. Tuva Alfred.
