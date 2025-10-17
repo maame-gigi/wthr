@@ -18,7 +18,7 @@ const weatherBgClass = (main) => {
 };
 
   return (
-    <div className={`bg-white/10 backdrop-blur-md text-white p-4 rounded-xl shadow ${compact ? "w-40" : ""}`}>
+    <div className="bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-6 shadow-md flex flex-col sm:flex-row justify-between items-center gap-6 w-full">
       <h3 className="font-semibold">{weather.name}</h3>
       <img src={iconUrl} alt="" className="mx-auto w-20 h-20" />
       <p className="text-lg">{Math.round(weather.main.temp)}°C</p>
