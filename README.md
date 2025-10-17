@@ -84,6 +84,6 @@ Displays personalized mood messages based on current weather.
 Updates dynamically when a city is searched on the dashboard.
 
 # Credits
-Made with ☕, curiosity, and too many late nights.
+Made with a lot of sighs and youtube helps and chatgpts; curiosity too, and too some late nights.
 Created by GLORIA — a chill CS student who just wanted to know if it’ll rain. 
 CHEERS TO ALX's Mr. Tuva Alfred.
