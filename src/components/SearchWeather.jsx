@@ -1,64 +1,62 @@
 import React, { useState } from "react";
-import WeatherCard from "./WeatherCard";
-import { Search } from "lucide-react";
+import { useWeather } from "../context/WeatherContext";
 
-const API_KEY = "952298e627d22900b8d976fb081151f1";
-
-export default function SearchWeather() {
-  const [city, setCity] = useState("");
-  const [weather, setWeather] = useState(null);
-  const [error, setError] = useState("");
+function SearchWeather() {
+  const { city, setCity, setWeather } = useWeather();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const fetchWeather = async () => {
-    if (!city) return;
+    if (!city.trim()) return;
     setLoading(true);
     setError("");
-    setWeather(null);
 
     try {
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-          city
-        )}&appid=${API_KEY}&units=metric`
-      );
+      const apiKey = "YOUR_OPENWEATHERMAP_API_KEY"; // 🔑 replace this
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+        city
+      )}&appid=${apiKey}&units=metric`;
+
+      const res = await fetch(url);
       const data = await res.json();
-      if (!res.ok) setError(data.message || "City not found");
-      else setWeather(data);
+
+      if (res.ok && data.cod === 200) {
+        setWeather(data);
+        setError("");
+      } else {
+        setWeather(null);
+        setError("City not found. Try again 🌍");
+      }
     } catch (err) {
-      setError("Network error. Try again later.");
+      console.error("Error fetching weather:", err);
+      setError("Failed to fetch data. Check your network or API key.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetchWeather();
-  };
-
   return (
-    <div className="w-full">
-      {/* Search bar */}
-      <form onSubmit={handleSubmit} className="flex items-center bg-black rounded-full px-4 py-2 shadow-md mb-6">
-        <Search className="text-gray-400 mr-2" size={18} />
+    <div className="flex flex-col items-center gap-3">
+      <div className="flex items-center gap-3 justify-center">
         <input
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          placeholder="Search any city..."
-          className="w-full bg-transparent outline-none text-gray-300 placeholder-gray-500"
+          onKeyDown={(e) => e.key === "Enter" && fetchWeather()}
+          placeholder="Search city..."
+          className="bg-white/20 text-white p-3 rounded-xl w-64 sm:w-80 outline-none placeholder-white/60"
         />
         <button
-          type="submit"
-          className="ml-3 bg-white/10 px-4 py-1 rounded-full text-sm hover:bg-white/20 transition"
+          onClick={fetchWeather}
+          disabled={loading}
+          className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-xl text-white"
         >
-          {loading ? "Searching..." : "Search"}
+          {loading ? "..." : "Search"}
         </button>
-      </form>
+      </div>
 
-      {/* Results */}
-      {error && <p className="text-red-400 text-center">{error}</p>}
-      {weather && <WeatherCard weather={weather} />}
+      {error && <p className="text-red-400 text-sm mt-1">{error}</p>}
     </div>
   );
 }
+
+export default SearchWeather;

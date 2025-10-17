@@ -1,28 +1,42 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-export default function WeatherCard({ weather, compact }) {
-  if (!weather) return null;
+function WeatherCard({ weather }) {
+  if (!weather || !weather.main) return null;
 
-  const iconUrl = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
-
-  // Map OpenWeather 'main' codes to simple background theme classes for the card only
-const weatherBgClass = (main) => {
-  if (!main) return "from-gray-800 to-gray-900"; // default
-  const m = main.toLowerCase();
-  if (m.includes("cloud")) return "from-gray-600 to-gray-900";
-  if (m.includes("rain") || m.includes("drizzle") || m.includes("thunder")) return "from-blue-700 to-blue-800";
-  if (m.includes("snow")) return "from-blue-300 to-blue-100";
-  if (m.includes("clear")) return "from-yellow-400 to-yellow-300";
-  if (m.includes("mist") || m.includes("haze") || m.includes("fog")) return "from-gray-600 to-gray-500";
-  return "from-gray-800 to-gray-700";
-};
+  const { name, main, weather: details, wind } = weather;
+  const desc = details[0]?.description || "";
+  const temp = Math.round(main.temp);
+  const icon = details[0]?.icon;
 
   return (
-    <div className="bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-6 shadow-md flex flex-col sm:flex-row justify-between items-center gap-6 w-full">
-      <h3 className="font-semibold">{weather.name}</h3>
-      <img src={iconUrl} alt="" className="mx-auto w-20 h-20" />
-      <p className="text-lg">{Math.round(weather.main.temp)}°C</p>
-      <p className="capitalize">{weather.weather[0].description}</p>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white/10 backdrop-blur-lg border border-white/10 rounded-2xl p-6 text-white shadow-lg"
+    >
+      <div className="flex flex-col items-center text-center space-y-3">
+        <h2 className="text-3xl font-semibold tracking-wide">{name}</h2>
+        <div className="flex items-center space-x-3">
+          <img
+            src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
+            alt="weather icon"
+            className="w-16 h-16"
+          />
+          <p className="text-5xl font-light">{temp}°C</p>
+        </div>
+        <p className="capitalize text-lg opacity-90">{desc}</p>
+
+        <div className="mt-4 grid grid-cols-2 gap-4 text-sm opacity-80">
+          <p>💧 Humidity: {main.humidity}%</p>
+          <p>🌬️ Wind: {wind.speed} m/s</p>
+          <p>🌡️ Feels like: {Math.round(main.feels_like)}°C</p>
+          <p>📈 Pressure: {main.pressure} hPa</p>
+        </div>
+      </div>
+    </motion.div>
   );
 }
+
+export default WeatherCard;
